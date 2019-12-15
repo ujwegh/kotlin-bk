@@ -1,23 +1,29 @@
 plugins {
-    kotlin("jvm") version "1.3.61"
+  kotlin("jvm") version "1.3.61"
 }
 
-group = "ru.nik"
-version = "1.0-SNAPSHOT"
 
-repositories {
+subprojects  {
+  group = "ru.nik"
+  version = "1.0-SNAPSHOT"
+}
+
+allprojects {
+  repositories {
     mavenCentral()
+  }
 }
+
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+  implementation(kotlin("stdlib-jdk8"))
 }
 
 tasks {
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
+  compileKotlin {
+    kotlinOptions.jvmTarget = "11"
+  }
+  compileTestKotlin {
+    kotlinOptions.jvmTarget = "11"
+  }
 }
