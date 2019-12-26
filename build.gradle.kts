@@ -23,7 +23,7 @@ allprojects {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.google.guava:guava:23.0")
-    implementation ("io.libp2p:jvm-libp2p-minimal:0.2.0-RELEASE")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
 }
 
