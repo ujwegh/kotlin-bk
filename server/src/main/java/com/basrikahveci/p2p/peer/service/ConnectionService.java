@@ -37,7 +37,7 @@ public class ConnectionService {
     private final ObjectEncoder encoder;
 
     // server name -> connection
-    private final Map<String, Connection> connections = new HashMap<String, Connection>();
+    private final Map<String, Connection> connections = new HashMap<>();
 
     public ConnectionService(Config config, EventLoopGroup networkEventLoopGroup, EventLoopGroup peerEventLoopGroup,
                              ObjectEncoder encoder) {

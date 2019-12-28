@@ -1,6 +1,7 @@
 package com.basrikahveci.p2p;
 
 import com.basrikahveci.p2p.peer.Config;
+import com.basrikahveci.p2p.peer.ConfigProperty;
 import com.google.common.base.Charsets;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -23,84 +24,6 @@ public class Main {
     private static final String CONFIG_FILE_PARAMETER = "c";
 
     private static final String HELP_PARAMETER = "help";
-
-    private enum ConfigProperty {
-
-        MIN_NUMBER_OF_ACTIVE_CONNECTIONS("minActiveConnections") {
-            @Override
-            public void setIntValue(int val, Config config) {
-                config.setMinNumberOfActiveConnections(val);
-            }
-        },
-
-        MAX_READ_IDLE_SECONDS("maxReadIdleSeconds") {
-            @Override
-            public void setIntValue(int val, Config config) {
-                config.setMaxReadIdleSeconds(val);
-            }
-        },
-
-        KEEP_ALIVE_PING_PERIOD_SECONDS("keepAlivePingPeriodSeconds") {
-            @Override
-            public void setIntValue(int val, Config config) {
-                config.setKeepAlivePeriodSeconds(val);
-            }
-        },
-
-        PING_TIMEOUT_SECONDS("pingTimeoutSeconds") {
-            @Override
-            public void setIntValue(int val, Config config) {
-                config.setPingTimeoutSeconds(val);
-            }
-        },
-
-        AUTO_DISCOVERY_PING_FREQUENCY("autoDiscoveryPingFrequency") {
-            @Override
-            public void setIntValue(int val, Config config) {
-                config.setAutoDiscoveryPingFrequency(val);
-            }
-        },
-
-        PING_TTL("pingTTL") {
-            @Override
-            public void setIntValue(int val, Config config) {
-                config.setPingTTL(val);
-            }
-        },
-
-        LEADER_ELECTION_TIMEOUT("leaderElectionTimeoutSeconds") {
-            @Override
-            public void setIntValue(int val, Config config) {
-                config.setLeaderElectionTimeoutSeconds(val);
-            }
-        },
-
-        LEADER_REJECTION_TIMEOUT("leaderRejectionTimeoutSeconds") {
-            @Override
-            public void setIntValue(int val, Config config) {
-                config.setLeaderRejectionTimeoutSeconds(val);
-            }
-        };
-
-        public static ConfigProperty byPropertyName(final String propertyName) {
-            for (ConfigProperty prop : values()) {
-                if (prop.propertyName.equals(propertyName)) {
-                    return prop;
-                }
-            }
-
-            throw new IllegalArgumentException("Invalid config property: " + propertyName);
-        }
-
-        private final String propertyName;
-
-        ConfigProperty(String propertyName) {
-            this.propertyName = propertyName;
-        }
-
-        public abstract void setIntValue(final int val, final Config config);
-
-    }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         if (System.getProperty(PEER_NAME_SYSTEM_PROPERTY) == null) {

@@ -1,5 +1,6 @@
 package com.basrikahveci.p2p;
 
+import com.basrikahveci.p2p.peer.Command;
 import com.basrikahveci.p2p.peer.Config;
 import com.basrikahveci.p2p.peer.PeerHandle;
 import io.netty.channel.ChannelFuture;
@@ -60,6 +61,39 @@ public class PeerRunner {
 
         return result;
     }
+
+    public CommandResult handleCommand(Command command, String host, Integer port) {
+        CommandResult result = CommandResult.CONTINUE;
+        try {
+            switch (command) {
+                case PING:
+                    handle.ping().whenComplete(new PingFutureListener());
+                    break;
+                case LEAVE:
+                    handle.leave().whenComplete(new LeaveFutureListener());
+                    result = CommandResult.SHUT_DOWN;
+                    break;
+                case CONNECT:
+                    handle.connect(host, port).whenComplete(new ConnectFutureListener(host, port));
+                    break;
+                case DISCONNECT:
+                    handle.disconnect(host);
+                    break;
+                case ELECTION:
+                    handle.scheduleLeaderElection();
+                    break;
+                default:
+                    result = INVALID_COMMAND;
+                    break;
+            }
+        } catch (Exception e) {
+            LOGGER.error("Command failed: " + command, e);
+            result = INVALID_COMMAND;
+        }
+
+        return result;
+    }
+
 
     private static class PingFutureListener implements BiConsumer<Collection<String>, Throwable> {
 
